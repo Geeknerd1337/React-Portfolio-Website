@@ -1,5 +1,6 @@
 import './App.scss';
 import About from './About';
+import Contact from './Contact';
 import React, { useState, useEffect, useRef } from "react";
 
 //Basically render the 'intro' to the website
@@ -117,7 +118,6 @@ function MainApp(){
      <div className="Left">
      <Category title="Info"/>
       <Project title="About" onTabChange={setTab} tab={tab}/>
-      <Project title="Github" onTabChange={setTab} tab={tab}/>
       <Project title="Contact" onTabChange={setTab} tab={tab} />
      <Category title="Games"/>
       <Project title="Netscape Cybermind" onTabChange={setTab} tab={tab}/>
@@ -143,6 +143,9 @@ function PageFactory(props){
     switch(props.tab){
       case "About":
         return <About/>
+      break;
+      case "Contact":
+        return <Contact/>
       break;
       default:
         return <EmptyPage/>

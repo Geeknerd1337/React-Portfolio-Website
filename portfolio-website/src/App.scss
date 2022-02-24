@@ -1,8 +1,4 @@
-$test: #f00;
-$terminal-back: #0C0703;
-$terminal-text: #F68307;
-$terminal-glow: #FFC40B;
-$terminal-selected: #191108;
+@import 'colors';
 
 .Main{
   position: absolute;
@@ -23,7 +19,7 @@ $terminal-selected: #191108;
   flex-direction: column;
   border-right: 4px solid $terminal-text;
   animation: glow 0.5s ease-in-out infinite alternate;
-
+  
 }
 
 
@@ -32,7 +28,7 @@ $terminal-selected: #191108;
   background-color: $terminal-back;
   height:100%;
   width:100%;
-  
+  overflow-y: scroll;
 }
 
 .Title{

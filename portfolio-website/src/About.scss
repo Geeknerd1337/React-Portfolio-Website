@@ -1,0 +1,24 @@
+@import 'colors';
+
+.About{
+
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    width: 100%;
+    color: $terminal-text;
+}
+
+.profileImage{
+    filter: sepia(100%) saturate(300%) brightness(100%) hue-rotate(345deg);
+}
+
+.mainText{
+    padding-left: 100px;
+    padding-right: 100px;
+    letter-spacing: 2px;
+    line-height: 150%;
+    white-space: pre-line;
+}
