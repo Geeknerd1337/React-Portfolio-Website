@@ -1,5 +1,5 @@
 import './App.scss';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function App() {
   const [second, setSecond] = useState(0);
@@ -9,26 +9,33 @@ function App() {
   useEffect(() => {
     const interval = setTimeout(() =>{
       setSecond((second) => second + 1);
-    }, 1000)
+    }, 100)
     return () => clearInterval(interval);
   });
 
   useEffect(() => {
-    addDirs((dirs) => dirs + "Hello world!\n");
+    addDirs((dirs) => dirs + {second} + " Hello world!\n");
   },[second])
 
   if(second < 100){
-    return <Startup directories={dirs}/>
+    return <Startup directories={dirs} count={second}/>
   }else{
     return <MainApp/>
   }
 }
 
 function Startup(props){
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(scrollToBottom, [props.count]);
+
   return(
     <div className="Startup">
       <div className="StartText">
         {props.directories}
+        <div className="reference" ref={messagesEndRef} />
       </div>
     </div>
   )
