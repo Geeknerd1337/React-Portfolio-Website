@@ -1,9 +1,41 @@
 import './App.scss';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const[tab, setTab] = useState("HEY");
-   
+  const [second, setSecond] = useState(0);
+  const [dirs, addDirs] = useState("");
+
+  //Tick up in seconds
+  useEffect(() => {
+    const interval = setTimeout(() =>{
+      setSecond((second) => second + 1);
+    }, 1000)
+    return () => clearInterval(interval);
+  });
+
+  useEffect(() => {
+    addDirs((dirs) => dirs + "Hello world!\n");
+  },[second])
+
+  if(second < 100){
+    return <Startup directories={dirs}/>
+  }else{
+    return <MainApp/>
+  }
+}
+
+function Startup(props){
+  return(
+    <div className="Startup">
+      <div className="StartText">
+        {props.directories}
+      </div>
+    </div>
+  )
+}
+
+function MainApp(){
+  const[tab, setTab] = useState("About");
   
   return (
     <div className="Main">

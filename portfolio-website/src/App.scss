@@ -65,3 +65,21 @@ $test: #f00;
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.Startup{
+  position: absolute;
+  left:0;
+  top:0;
+  width:100vw;
+  height:100vh;
+  white-space: pre-line;
+  background-color: #f00;
+  overflow:scroll;
+}
+
+.StartText{
+  position:absolute;
+  top:0;
+  left:0;
+  
+}
