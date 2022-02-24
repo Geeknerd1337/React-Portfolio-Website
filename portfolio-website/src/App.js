@@ -1,6 +1,8 @@
 import './App.scss';
+import About from './About';
 import React, { useState, useEffect, useRef } from "react";
 
+//Basically render the 'intro' to the website
 function App() {
   const [second, setSecond] = useState(0);
   const [dirs, addDirs] = useState("");
@@ -8,26 +10,91 @@ function App() {
   //Tick up in seconds
   useEffect(() => {
     const interval = setTimeout(() =>{
+      
       setSecond((second) => second + 1);
-    }, 100)
+    }, 1)
     return () => clearInterval(interval);
   });
 
   useEffect(() => {
-    addDirs((dirs) => dirs + {second} + " Hello world!\n");
+    if(second > 2250 && second < 3999){
+      if(second % 25 == 0){
+      addDirs((dirs) => dirs + makeDirectory(second) + "\n");
+      }
+    }
+
+    if(second == 3999){
+      addDirs((dirs) => "JoshOS v0.0.1(beta) is now loaded!\nEnjoy your stay in my React Portfolio!");
+    }
+
+    if(second < 2250){
+      if(second == 100){
+        addDirs((dirs) => dirs + "runCmd -r JoshWilsonOS '/portfolio/*'\n");
+      }
+      if(second == 500){
+        addDirs((dirs) => dirs + "Loading JoshWilsonOS v0.0.1(beta)...\n");
+      }
+      if(second == 1000){
+        addDirs((dirs) => dirs + "Fetching executable...\n");
+      }
+
+      if(second == 1500){
+        addDirs((dirs) => dirs + "\nMounting Portfolio...\n\n");
+      }
+    }
+
   },[second])
 
-  if(second < 100){
+
+  if(second < 4750){
     return <Startup directories={dirs} count={second}/>
   }else{
     return <MainApp/>
   }
 }
 
+function makeDirectory(currentCount) {
+  let result           = '';
+  let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let charactersLength = characters.length;
+  let length = Math.floor(Math.random() * 10) + 1;
+
+  let dirs = [
+    "C:/user/Josh Wilson/games/",
+    "C:/user/Josh Wilson/vfx/",
+    "C:/user/Josh Wilson/project management/",
+    "C:/system/JoshOS/binaries/",
+    "C:/system/JoshOS/coreFiles/",
+    "C:/system/JoshOS/libraries/",
+    "C:/system/JoshOS/programs/"
+  ]
+  
+  let files = [
+    ".cs",
+    ".mp4",
+    ".sheet",
+    ".dll",
+    ".pdb",
+    ".lib",
+    ".exe"
+  ]
+
+  let ind = Math.floor(((currentCount - 2250)/(3999 - 2250)) * 7);
+
+  result += dirs[ind];
+  
+
+  for ( let i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+ }
+ return result + files[ind];
+}
+
+//Draw a series of 'directories' to the screen
 function Startup(props){
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current.scrollIntoView({ behavior: "auto" });
   };
   useEffect(scrollToBottom, [props.count]);
 
@@ -41,6 +108,7 @@ function Startup(props){
   )
 }
 
+//Draw the tab categories and the relevant opened tab
 function MainApp(){
   const[tab, setTab] = useState("About");
   
@@ -58,9 +126,9 @@ function MainApp(){
       <Project title="HD ME" onTabChange={setTab} tab={tab}/>
       <Project title="DOT COM GUY" onTabChange={setTab}  tab={tab}/>
       <Project title="Chip In The Streets" onTabChange={setTab} tab={tab}/>
-     <Category title="Project Management" onTabChange={setTab} tab={tab}/>
+     <Category title="Management" onTabChange={setTab} tab={tab}/>
       <Project title="Eagle One" onTabChange={setTab} tab={tab}/>
-    <h1>{tab}</h1>
+
      </div>
      <div className="Right">
        <PageFactory tab={tab}/>
@@ -70,21 +138,18 @@ function MainApp(){
   );
 }
 
+//Return the appropriate page to draw
 function PageFactory(props){
     switch(props.tab){
       case "About":
-        return <AboutPage/>
+        return <About/>
       break;
       default:
         return <EmptyPage/>
     }
 }
 
-function AboutPage(){
-  return(
-    <h1>This is where will put some info</h1>
-  )
-}
+
 
 function EmptyPage(){
   return(
