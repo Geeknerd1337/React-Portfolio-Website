@@ -14,6 +14,8 @@ function About(){
             experiment with new and exciting technologies.
             {"\n\n"} 
             Please, take a look around and view some of my work. If you like what you see, feel free to contact me via the links on my contact page.
+            {"\n"}
+            This website was created by myself using React.
         </text>
       </div>
     )

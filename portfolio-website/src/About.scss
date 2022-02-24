@@ -9,6 +9,9 @@
     height:100%;
     width: 100%;
     color: $terminal-text;
+    animation-name: slideIn;
+    animation-duration: 0.25s;
+    animation-timing-function: ease-out;
 }
 
 .profileImage{
@@ -22,3 +25,15 @@
     line-height: 150%;
     white-space: pre-line;
 }
+
+@keyframes slideIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    
+    to {
+      top:0%;
+      opacity: 1;
+    }
+  }
