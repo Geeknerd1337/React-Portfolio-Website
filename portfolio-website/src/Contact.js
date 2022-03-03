@@ -26,10 +26,14 @@ function Contact(){
   function Link(props){
       return(
           <div className="linkHolder">
+            <div className="imageHolder">
               <img className="linkImage" src={props.image}/>
+            </div>
               <a href={props.link} className="hyper">{props.linkName}</a>
           </div>
       )
   }
+
+
 
   export default Contact;

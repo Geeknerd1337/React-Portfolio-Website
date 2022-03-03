@@ -2,22 +2,39 @@ import './App.scss';
 import About from './About';
 import Contact from './Contact';
 import Netscape from './Netscape';
-import Sbox from './Sbox';
-import React, { useState, useEffect, useRef } from "react";
+import Games from './Games';
+import {Sbox, VidHolder} from './Sbox.js';
+import useSound from 'use-sound';
+
+import React, { useState, useEffect, useRef, useMemo } from "react";
 
 //Basically render the 'intro' to the website
 function App() {
   const [second, setSecond] = useState(0);
   const [dirs, addDirs] = useState("");
+  const [started, setStarted] = useState(false);
+
+  const [playLoad] = useSound(
+    '/sounds/load.mp3',
+    { volume: 0.25 }
+  );
+
+  const [playEnter] = useSound(
+    '/sounds/enterkey.mp3',
+    { volume: 0.25 }
+  );
 
   //Tick up in seconds
   useEffect(() => {
     const interval = setTimeout(() =>{
-      
-      setSecond((second) => second + 1);
-    }, 1)
+      if(started){
+        setSecond((second) => second + 1);
+        console.log(started);
+      }
+    }, [started])
     return () => clearInterval(interval);
   });
+
 
   useEffect(() => {
     if(second > 1000 && second < 2000){
@@ -31,6 +48,8 @@ function App() {
     }
 
     if(second < 1000){
+ 
+
       if(second == 100){
         addDirs((dirs) => dirs + "runCmd -r JoshWilsonOS '/portfolio/*'\n");
       }
@@ -50,10 +69,28 @@ function App() {
 
 
   if(second < 2500){
+    if(started){
     return <Startup directories={dirs} count={second}/>
+    }else{
+      return <StartupWithButton set={() => {
+        setStarted(true);
+        playEnter();
+        playLoad();
+      }
+      }/>
+    }
   }else{
     return <MainApp/>
   }
+}
+
+function StartupWithButton(props){
+
+  return(
+    <div className="StartupWithButton">
+      <button className="startbutton" onClick={props.set}>POWER</button>
+    </div>
+  )
 }
 
 function makeDirectory(currentCount) {
@@ -96,10 +133,14 @@ function makeDirectory(currentCount) {
 //Draw a series of 'directories' to the screen
 function Startup(props){
   const messagesEndRef = useRef(null);
+
+
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "auto" });
   };
   useEffect(scrollToBottom, [props.count]);
+
+  
 
   return(
     <div className="Startup">
@@ -109,6 +150,8 @@ function Startup(props){
       </div>
     </div>
   )
+
+  
 }
 
 //Draw the tab categories and the relevant opened tab
@@ -129,8 +172,7 @@ function MainApp(){
       <Project title="HD ME" onTabChange={setTab} tab={tab}/>
       <Project title="DOT COM GUY" onTabChange={setTab}  tab={tab}/>
       <Project title="Chip In The Streets" onTabChange={setTab} tab={tab}/>
-     <Category title="Management" onTabChange={setTab} tab={tab}/>
-      <Project title="Eagle One" onTabChange={setTab} tab={tab}/>
+
 
      </div>
      <div className="Right">
@@ -156,6 +198,23 @@ function PageFactory(props){
       case "S&box":
         return <Sbox/>
       break;
+      case "Misc. Games":
+        return <Games/>
+      break;
+      case "HD ME":
+        return <VidHolder cl="Vids" title="HD ME" link="https://www.youtube.com/embed/CagKjOtKbq4" text="HD ME was my first foray into legitimate video effects. This essentially helped me find my creative voice. The song was written by myself and my friend Will. The entirety of the video was filmed in front of a green bed sheet nailed to my closet, but I'm still proud of how well it turned out." />
+      break;
+      case "DOT COM GUY":
+        return (
+        <div className="vids">
+        <VidHolder cl="Vids" title="DOT COM GUY" link="https://www.youtube.com/embed/8WPKzuzy9UQ" text="Dot Com Guy was the sequel to HD ME created in the summer of 2021. Its the culmination of every skill I had learned since HD ME and it's currently the work I'm most proud of. The entire production was an absolute crazy fest of song production, video effects, filming, and direction."/>
+        <VidHolder cl="Vids" title="BEHIND THE SCENES" link="https://www.youtube.com/embed/gMuhhkZHsg8" text="This was a look into the process I took to rotoscope out silver fabric. Light your green screens properly, kids."/>
+        </div>
+        )
+      break;
+      case "Chip In The Streets":
+          return <VidHolder cl="Vids" title="CHIP IN THE STREETS" link="https://www.youtube.com/embed/hU6x51tL-WA" text="For a while I had a (now deceased) news personality by the name of Chip Chadley. I only did a short number of projects with this character but was happy with how this video turned out. This was during a time when I tried to have a cinematic beginning or end to all my videos."/>
+      break;
       default:
         return <EmptyPage/>
     }
@@ -178,13 +237,28 @@ function Category(props){
 }
 
 function Project(props){
+  const [playOn] = useSound(
+    '/sounds/key.mp3',
+    { volume: 0.25 }
+  );
+
+  const [enter] = useSound(
+    '/sounds/enterkey.mp3',
+    { volume: 0.25 }
+  );
 
   return(
-    <button className={props.tab == props.title ? "ProjectSelected" : "Project"} onClick={() => {props.onTabChange(props.title)}}>
+    <button className={props.tab == props.title ? "ProjectSelected" : "Project"} onMouseEnter={playOn} onClick={() => {
+      props.onTabChange(props.title);
+      enter();
+      }}>
     <h2 className="headers">{props.title}</h2>
     </button>
   )
 }
+
+
+
 
 
 export default App;
