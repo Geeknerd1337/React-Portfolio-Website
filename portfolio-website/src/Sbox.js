@@ -9,7 +9,7 @@ export function Sbox(){
        <h1>What is S&box?</h1>
        <text className="mainText">
         S&box is a spiritual successor to Facepunch Studio's Gmod. It is a game framework built upon the top of Valve's proprietary Source 2 Engine and is currently in development.
-        Over the last year I, with a team of almost 20 people, have worked on gamemodes within this framework in order to test and stretch this engine to it's limits.
+        Over the last year I, with a team of almost 20 people, have worked on gamemodes within this framework in order to test and stretch this engine to its limits.
         {'\n'}{'\n'}
         Here are some examples of my work
        </text>
