@@ -1,6 +1,8 @@
 import './App.scss';
 import About from './About';
 import Contact from './Contact';
+import Netscape from './Netscape';
+import Sbox from './Sbox';
 import React, { useState, useEffect, useRef } from "react";
 
 //Basically render the 'intro' to the website
@@ -18,28 +20,28 @@ function App() {
   });
 
   useEffect(() => {
-    if(second > 2250 && second < 3999){
-      if(second % 25 == 0){
+    if(second > 1000 && second < 2000){
+      if(second % 5 == 0){
       addDirs((dirs) => dirs + makeDirectory(second) + "\n");
       }
     }
 
-    if(second == 3999){
+    if(second == 2000){
       addDirs((dirs) => "JoshOS v0.0.1(beta) is now loaded!\nEnjoy your stay in my React Portfolio!");
     }
 
-    if(second < 2250){
+    if(second < 1000){
       if(second == 100){
         addDirs((dirs) => dirs + "runCmd -r JoshWilsonOS '/portfolio/*'\n");
       }
-      if(second == 500){
+      if(second == 200){
         addDirs((dirs) => dirs + "Loading JoshWilsonOS v0.0.1(beta)...\n");
       }
-      if(second == 1000){
+      if(second == 500){
         addDirs((dirs) => dirs + "Fetching executable...\n");
       }
 
-      if(second == 1500){
+      if(second == 1000){
         addDirs((dirs) => dirs + "\nMounting Portfolio...\n\n");
       }
     }
@@ -47,7 +49,7 @@ function App() {
   },[second])
 
 
-  if(second < 4750){
+  if(second < 2500){
     return <Startup directories={dirs} count={second}/>
   }else{
     return <MainApp/>
@@ -80,7 +82,7 @@ function makeDirectory(currentCount) {
     ".exe"
   ]
 
-  let ind = Math.floor(((currentCount - 2250)/(3999 - 2250)) * 7);
+  let ind = Math.floor(((currentCount - 1000)/(1000)) * 7);
 
   result += dirs[ind];
   
@@ -121,6 +123,7 @@ function MainApp(){
       <Project title="Contact" onTabChange={setTab} tab={tab} />
      <Category title="Games"/>
       <Project title="Netscape Cybermind" onTabChange={setTab} tab={tab}/>
+      <Project title="S&box" onTabChange={setTab} tab={tab}/>
       <Project title="Misc. Games" onTabChange={setTab} tab={tab}/>
      <Category title="VFX"/>
       <Project title="HD ME" onTabChange={setTab} tab={tab}/>
@@ -146,6 +149,12 @@ function PageFactory(props){
       break;
       case "Contact":
         return <Contact/>
+      break;
+      case "Netscape Cybermind":
+        return <Netscape/>
+      break;
+      case "S&box":
+        return <Sbox/>
       break;
       default:
         return <EmptyPage/>

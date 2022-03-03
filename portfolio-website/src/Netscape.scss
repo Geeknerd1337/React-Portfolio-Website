@@ -1,12 +1,12 @@
 @import 'colors';
 
-.About{
+.Netscape{
 
     align-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
-    height:auto;
+    height:100%;
     width: 100%;
     color: $terminal-text;
     animation-name: slideIn;
@@ -14,33 +14,13 @@
     animation-timing-function: ease-out;
 }
 
-.profileImage{
-    filter: sepia(100%) saturate(300%) brightness(100%) hue-rotate(345deg);
-}
 
 .mainText{
     padding-left: 100px;
     padding-right: 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     letter-spacing: 2px;
     line-height: 150%;
     white-space: pre-line;
 }
-
-.linkImage{
-  position: absolute;
-
-  
-}
-
-
-@keyframes slideIn {
-    from {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    
-    to {
-      top:0%;
-      opacity: 1;
-    }
-  }
